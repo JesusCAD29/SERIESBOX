@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeriesBox 🎬</title>
+  <link rel="stylesheet" href="/css/tema.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>" />
+</head>
+<body>
+
+<div id="app">
+
+  <header class="navbar">
+    <a class="navbar-brand" href="#">
+      <span class="logo-icon">▶</span>
+      <span class="logo-text">Series<span>Box</span></span>
+    </a>
+    <div class="navbar-right">
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+        <span class="username-display" id="username-display">@Invitado</span>
+        <span id="session-timer" style="
+          display: none;
+          font-size: 0.68rem;
+          color: rgba(255,255,255,0.45);
+          letter-spacing: 0.04em;
+          font-variant-numeric: tabular-nums;
+          line-height: 1;
+        ">⏱ 00:00</span>
+      </div>
+      <div class="avatar-badge" id="avatar-badge" title="Tu perfil">I</div>
+    </div>
+  </header>
+
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="home"     role="tab">🏠 Discover</button>
+    <button class="tab-btn"        data-tab="myseries" role="tab">📋 Mis Series</button>
+    <button class="tab-btn"        data-tab="ruleta"   role="tab">🎰 La Ruleta</button>
+  </nav>
+
+  <!-- ── DISCOVER ─────────────────────────────────────────────────────────── -->
+  <main id="page-home" class="page active" role="tabpanel">
+    <div id="home-loading">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+  </main>
+
+  <!-- ── MIS SERIES ───────────────────────────────────────────────────────── -->
+  <main id="page-myseries" class="page" role="tabpanel">
+    <section class="perfil-section">
+      <div class="perfil-avatar"   id="perfil-avatar">I</div>
+      <div class="perfil-username" id="perfil-username">@Invitado</div>
+      <div class="perfil-rango">Cinéfilo Experto</div>
+    </section>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-label">Vistas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-favorito">–</div>
+        <div class="stat-label">Favorito</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-media">0.0 ★</div>
+        <div class="stat-label">Media</div>
+      </div>
+    </div>
+
+    <!-- Sección "Por Ver" (watchlist desde la ruleta) -->
+    <div id="porver-section" class="porver-section" style="display:none;">
+      <h2 class="section-title">📌 Por Ver</h2>
+      <div id="porver-container" class="porver-container"></div>
+    </div>
+
+    <h2 class="section-title">Historial de Visualización</h2>
+    <div class="historial-container" id="historial-container">
+      <p class="historial-empty">Aún no tienes series agregadas.</p>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Agregar Nueva Serie</div>
+
+      <div class="form-group" id="nombre-group">
+        <label class="form-label" for="input-nombre">Nombre de la serie</label>
+        <input id="input-nombre" class="form-input" type="text" placeholder="Ej. Breaking Bad..." autocomplete="off" />
+        <div class="autocomplete-dropdown" id="autocomplete-dropdown"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="input-genero">Género</label>
+          <div class="select-wrapper">
+            <select id="input-genero" class="form-select">
+              <option>Acción</option><option>Animación</option><option>Aventura</option>
+              <option>Comedia</option><option>Crimen</option><option>Documental</option>
+              <option>Drama</option><option>Fantasía</option><option>Misterio</option>
+              <option>Romance</option><option>Sci-Fi</option><option>Terror</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-temps">Temporadas</label>
+          <input id="input-temps" class="form-input" type="number" min="1" max="30" placeholder="Ej. 5" />
+        </div>
+      </div>
+
+      <div class="stars-container" id="stars-container">
+        <button class="star-btn" data-value="1">☆</button>
+        <button class="star-btn" data-value="2">☆</button>
+        <button class="star-btn" data-value="3">☆</button>
+        <button class="star-btn" data-value="4">☆</button>
+        <button class="star-btn" data-value="5">☆</button>
+      </div>
+
+      <div id="critica-container" class="form-group" style="display:none;margin-top:1.2rem;margin-bottom:1.2rem;">
+        <label class="form-label" for="input-critica">Tu Crítica / Opinión</label>
+        <textarea id="input-critica" class="form-input" rows="3"
+          placeholder="¿Qué te pareció esta serie? Cuéntanos tus impresiones..."
+          style="resize:none;font-family:inherit;line-height:1.4;width:100%;"></textarea>
+      </div>
+
+      <button class="btn-primary" id="btn-guardar">Guardar en Historial</button>
+    </div>
+  </main>
+
+  <!-- ── RULETA ───────────────────────────────────────────────────────────── -->
+  <main id="page-ruleta" class="page" role="tabpanel">
+    <div class="ruleta-header">
+      <h1>La Ruleta</h1>
+      <p>Descubre tu próxima obsesión</p>
+    </div>
+
+    <div class="slot-wrapper">
+      <div class="slot-viewport">
+        <div class="selector-line"></div>
+        <div class="slot-reel" id="slot-reel"></div>
+      </div>
+    </div>
+
+    <div class="result-overlay" id="result-overlay"></div>
+
+    <button class="btn-generar btn-girar" id="btn-girar">¡TIRAR LA RULETA!</button>
+  </main>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="auth-modal-overlay">
+  <div class="auth-card">
+    <div class="auth-logo">🍿 Series<span>Box</span></div>
+    <div class="auth-tabs-container">
+      <button id="tab-auth-login"    class="auth-tab active" type="button">Ingresar</button>
+      <button id="tab-auth-register" class="auth-tab"        type="button">Registrarse</button>
+    </div>
+    <form id="form-login" class="auth-form active-form">
+      <div class="form-group">
+        <label class="form-label">CORREO ELECTRÓNICO</label>
+        <input type="email" id="login-correo" class="form-input" placeholder="tu@correo.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CONTRASEÑA</label>
+        <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-primary-submit">Iniciar Sesión</button>
+    </form>
+    <form id="form-register" class="auth-form hidden-form">
+      <div class="form-group">
+        <label class="form-label">NOMBRE DE USUARIO</label>
+        <input type="text" id="reg-nombre" class="form-input" placeholder="Ej. angeluriel" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CORREO ELECTRÓNICO</label>
+        <input type="email" id="reg-correo" class="form-input" placeholder="tu@correo.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CONTRASEÑA</label>
+        <input type="password" id="reg-password" class="form-input" placeholder="Mínimo 6 caracteres" required>
+      </div>
+      <button type="submit" class="btn-primary-submit">Crear Cuenta</button>
+    </form>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/panelHome.js"></script>
+<script src="/js/panelMySeries.js"></script>
+<script src="/js/panelRuleta.js"></script>
+<script src="/js/usuario.js"></script>
+<script src="/js/app.js"></script>
+
+</body>
+</html>

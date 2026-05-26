@@ -1,0 +1,910 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   public/css/tema.css
+   Tema Premium de SeriesBox – Espejo de Tema.java
+   Modo oscuro + acento rojo carmesí estilo Netflix
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Variables (equivalentes a las constantes de Tema.java) ─────────────── */
+:root {
+  --fondo-oscuro:  #121212;
+  --panel-oscuro:  #1e1e1e;
+  --input-fondo:   #2d2d2d;
+
+  --texto-claro:   #f0f0f0;
+  --texto-muted:   #787878;
+
+  --acento-rojo:   #e5091a;
+  --acento-naranja:#f1c40f;
+
+  --borde-sutil:   #333333;
+  --borde-input:   #464646;
+
+  --radio:         12px;
+  --radio-sm:      8px;
+
+  --transicion:    0.2s ease;
+  --sombra:        0 4px 20px rgba(0,0,0,0.5);
+}
+
+/* ── Reset & base ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--fondo-oscuro);
+  color: var(--texto-claro);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar personalizado (como estilizarScroll en Java) ─────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--fondo-oscuro); }
+::-webkit-scrollbar-thumb { background: #505050; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #707070; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LAYOUT – App Shell
+   ══════════════════════════════════════════════════════════════════════════ */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Navbar / Header ───────────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--panel-oscuro);
+  border-bottom: 1px solid var(--borde-sutil);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.navbar-brand .logo-icon {
+  color: var(--acento-rojo);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.navbar-brand .logo-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--texto-claro);
+}
+
+.navbar-brand .logo-text span {
+  color: var(--acento-rojo);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--acento-rojo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform var(--transicion);
+}
+
+.avatar-badge:hover { transform: scale(1.1); }
+
+.username-display {
+  font-size: 0.85rem;
+  color: var(--texto-muted);
+}
+
+/* ── Tab Navigation ────────────────────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  background: var(--panel-oscuro);
+  border-bottom: 1px solid var(--borde-sutil);
+  padding: 0 1.5rem;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-top: 3px solid transparent;
+  padding: 0.85rem 1.25rem;
+  color: var(--texto-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transicion), border-color var(--transicion);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.tab-btn:hover  { color: var(--texto-claro); }
+
+.tab-btn.active {
+  color: var(--texto-claro);
+  border-top-color: var(--acento-rojo);  /* equiv. BORDE_TAB en Java */
+}
+
+/* ── Page containers ───────────────────────────────────────────────────── */
+.page { display: none; flex: 1; }
+.page.active { display: block; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PANEL HOME – PanelHome.java
+   ══════════════════════════════════════════════════════════════════════════ */
+#page-home {
+  padding: 2rem 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.page-title h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--acento-rojo);
+  letter-spacing: -0.5px;
+}
+
+.page-title p {
+  color: var(--texto-muted);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+/* ── CARRUSEL HERO (Estilo Netflix) ────────────────────────────────────── */
+.hero-carousel-container {
+  width: 100%;
+  height: 220px; /* Alto de la "ventana" */
+  overflow: hidden; /* Oculta lo que se sale del contenedor */
+  position: relative;
+  margin-bottom: 2rem;
+  border-radius: var(--radio);
+  background: var(--fondo-oscuro); /* Se funde con el fondo */
+}
+
+.hero-carousel-track {
+  display: flex;
+  gap: 15px; /* Espacio entre cada portada */
+  height: 100%;
+  align-items: center;
+  /* Transición suave para que el movimiento de JavaScript no sea de golpe */
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
+}
+
+.hero-carousel-item {
+  width: 140px; /* Ancho de cada portada */
+  height: 200px;
+  flex-shrink: 0; /* Evita que las imágenes se aplasten para caber */
+  border-radius: var(--radio-sm);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.hero-carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta la imagen cuidando su proporción */
+  display: block;
+}
+
+/* Efecto hover cuando el usuario pone el cursor sobre una serie */
+.hero-carousel-item:hover {
+  transform: scale(1.08); /* Se hace un poquito más grande */
+  border-color: var(--acento-rojo);
+  box-shadow: 0 4px 15px rgba(229, 9, 26, 0.4);
+  z-index: 10;
+}
+
+/* ──────────────────────────────────────────────────────────────────────── */
+/* Card de lanzamiento */
+.card-launch {
+  background: var(--panel-oscuro);
+  border: 1px solid var(--borde-sutil);
+  border-radius: var(--radio);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+  transition: border-color var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+}
+
+.card-launch:hover {
+  border-color: var(--acento-rojo);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra);
+}
+
+.card-launch-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.card-launch-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texto-claro);
+}
+
+.badge-nuevo {
+  background: var(--acento-rojo);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.card-launch-meta {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--texto-muted);
+}
+
+.card-launch-meta span { display: flex; align-items: center; gap: 0.25rem; }
+
+.btn-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+  background: var(--acento-rojo);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-sm);
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity var(--transicion);
+  letter-spacing: 0.3px;
+}
+
+.btn-play:hover { opacity: 0.85; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PANEL MY SERIES – PanelMySeries.java
+   ══════════════════════════════════════════════════════════════════════════ */
+#page-myseries {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Perfil */
+.perfil-section {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--borde-sutil);
+  margin-bottom: 1.5rem;
+}
+
+.perfil-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--acento-rojo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 auto 0.75rem;
+}
+
+.perfil-username {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--texto-claro);
+}
+
+.perfil-rango {
+  font-size: 0.85rem;
+  color: var(--texto-muted);
+  margin-top: 0.2rem;
+}
+
+/* Estadísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.stat-card {
+  background: var(--panel-oscuro);
+  border: 1px solid var(--borde-sutil);
+  border-radius: var(--radio);
+  padding: 1rem 0.75rem;
+  text-align: center;
+  transition: border-color var(--transicion);
+}
+
+.stat-card:hover { border-color: var(--acento-rojo); }
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--texto-claro);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--texto-muted);
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Historial */
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texto-claro);
+  margin-bottom: 1rem;
+  letter-spacing: 0.2px;
+}
+
+.historial-container {
+  margin-bottom: 2rem;
+  min-height: 60px;
+}
+
+.historial-empty {
+  color: var(--texto-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+/* Card de historial */
+.card-historial {
+  background: var(--panel-oscuro);
+  border: 1px solid var(--borde-sutil);
+  border-radius: var(--radio);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: border-color var(--transicion);
+}
+
+.card-historial:hover { border-color: #555; }
+
+.card-historial-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto-claro);
+}
+
+.card-historial-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--texto-muted);
+}
+
+.card-historial-stars {
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+/* Formulario agregar serie */
+.form-section {
+  border-top: 1px solid var(--borde-sutil);
+  padding-top: 1.75rem;
+}
+
+.form-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--acento-rojo);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.form-group { margin-bottom: 1rem; position: relative; }
+
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--texto-muted);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Inputs & Select (equiv. estilizarInput / estilizarComboBox en Java) */
+.form-input,
+.form-select {
+  width: 100%;
+  background: var(--input-fondo);
+  border: 1px solid var(--borde-input);
+  border-radius: var(--radio-sm);
+  color: var(--texto-claro);
+  font-size: 0.95rem;
+  padding: 0.6rem 0.85rem;
+  outline: none;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+  appearance: none;
+}
+
+.form-input::placeholder { color: var(--texto-muted); }
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--acento-rojo);
+  box-shadow: 0 0 0 3px rgba(229,9,26,0.15);
+}
+
+.form-select { cursor: pointer; }
+
+/* Select custom arrow */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '▼';
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--texto-muted);
+  font-size: 0.7rem;
+  pointer-events: none;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Estrellas (equiv. estrellasBtn en Java) */
+.stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 1.9rem;
+  cursor: pointer;
+  color: var(--texto-muted);
+  transition: color var(--transicion), transform 0.1s ease;
+  line-height: 1;
+}
+
+.star-btn.filled { color: var(--acento-naranja); }
+.star-btn:hover  { transform: scale(1.2); }
+
+/* Botón principal (equiv. estilizarBotonPrincipal en Java) */
+.btn-primary {
+  width: 100%;
+  background: var(--acento-rojo);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-sm);
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity var(--transicion), transform var(--transicion);
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover  { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); opacity: 1; }
+
+/* Autocomplete dropdown */
+.autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--panel-oscuro);
+  border: 1px solid var(--acento-rojo);
+  border-radius: 0 0 var(--radio-sm) var(--radio-sm);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 200;
+  display: none;
+  box-shadow: var(--sombra);
+}
+
+.autocomplete-dropdown.visible { display: block; }
+
+.autocomplete-item {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--texto-claro);
+  cursor: pointer;
+  transition: background var(--transicion);
+}
+
+.autocomplete-item:hover {
+  background: var(--acento-rojo);
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PANEL RULETA – PanelRuleta.java
+   ══════════════════════════════════════════════════════════════════════════ */
+#page-ruleta {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.ruleta-header {
+  text-align: center;
+}
+
+.ruleta-header h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--texto-claro);
+  letter-spacing: -0.5px;
+}
+
+.ruleta-header p {
+  color: var(--acento-rojo);
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+  font-weight: 600;
+}
+
+/* El mecanismo de la tragamonedas */
+.slot-wrapper {
+  position: relative;
+  width: 340px;
+}
+
+/* Marco exterior con gradiente arriba/abajo para dar sensación de profundidad */
+.slot-wrapper::before,
+.slot-wrapper::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 60px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.slot-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--fondo-oscuro), transparent);
+  border-radius: var(--radio) var(--radio) 0 0;
+}
+
+.slot-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--fondo-oscuro), transparent);
+  border-radius: 0 0 var(--radio) var(--radio);
+}
+
+/* La ventana de la tragamonedas */
+.slot-viewport {
+  width: 340px;
+  height: 160px;         /* muestra ~3 filas */
+  overflow: hidden;
+  border: 2px solid var(--borde-sutil);
+  border-radius: var(--radio);
+  background: var(--panel-oscuro);
+  position: relative;
+}
+
+/* Línea de selección central */
+.slot-viewport .selector-line {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 54px;
+  border-top: 2px solid var(--acento-rojo);
+  border-bottom: 2px solid var(--acento-rojo);
+  z-index: 5;
+  pointer-events: none;
+  background: rgba(229,9,26,0.05);
+}
+
+/* La cinta de la tragamonedas que se desplaza */
+.slot-reel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+.slot-item {
+  height: 54px;               /* ALTO_FILA en Java = 50px, usamos 54 para mejor lectura */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texto-muted);
+  transition: color 0.3s;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.slot-item.winner {
+  color: var(--acento-rojo);
+  font-size: 1.2rem;
+}
+
+/* Tarjeta de resultado (overlay) */
+.result-overlay {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--panel-oscuro);
+  border: 2px solid var(--acento-rojo);
+  border-radius: var(--radio);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+  animation: fadeIn 0.35s ease;
+  box-shadow: 0 0 30px rgba(229,9,26,0.2);
+}
+
+.result-overlay.visible { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.result-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--texto-claro);
+  line-height: 1.2;
+}
+
+.result-meta {
+  font-size: 0.88rem;
+  color: var(--texto-muted);
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Botón Girar */
+.btn-girar {
+  background: var(--acento-rojo);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-sm);
+  padding: 1rem 2.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: opacity var(--transicion), transform var(--transicion);
+  box-shadow: 0 4px 15px rgba(229,9,26,0.35);
+}
+
+.btn-girar:hover:not(:disabled) { opacity: 0.9; transform: translateY(-2px); }
+.btn-girar:active:not(:disabled) { transform: translateY(0); }
+.btn-girar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Toast notificación ─────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--panel-oscuro);
+  border: 1px solid var(--acento-rojo);
+  color: var(--texto-claro);
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radio-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  box-shadow: var(--sombra);
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── Loading skeleton ───────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--panel-oscuro) 25%, #282828 50%, var(--panel-oscuro) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radio-sm);
+  height: 80px;
+  margin-bottom: 0.7rem;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .navbar { padding: 0 1rem; }
+  .tab-nav { padding: 0 0.5rem; }
+  .tab-btn { padding: 0.75rem 0.9rem; font-size: 0.82rem; }
+
+  #page-home,
+  #page-myseries,
+  #page-ruleta { padding: 1.5rem 1rem; }
+
+  .stats-grid { gap: 0.5rem; }
+  .stat-value { font-size: 1.2rem; }
+
+  .slot-viewport,
+  .slot-wrapper { width: 100%; max-width: 340px; }
+
+  .ruleta-header h1 { font-size: 1.7rem; }
+}
+/* Fuerza a que el modal cubra toda la pantalla al abrir la página */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85); /* Fondo oscuro semitransparente */
+  display: flex;                  /* Mantiene centrado el cuadro */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;                  /* Por encima de cualquier otra cosa */
+}
+
+/* Asegura que los formularios no activos se oculten */
+.auth-form {
+  display: none;
+}
+
+.auth-form.active {
+  display: block;
+}
+/* --- REDISEÑO PREMIUM COMPONENTE LOGIN --- */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.auth-card {
+  background: #181818;
+  padding: 40px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.auth-logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 25px;
+  font-family: sans-serif;
+}
+.auth-logo span { color: #e50914; }
+
+.auth-tabs-container {
+  display: flex;
+  background: #111;
+  border-radius: 6px;
+  padding: 4px;
+  margin-bottom: 30px;
+}
+
+/* Letras estilizadas sin la caja gris horrible del navegador */
+.auth-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #777;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.auth-tab.active {
+  background: #e50914;
+  color: #fff;
+}
+
+.auth-form.hidden-form {
+  display: none !important;
+}
+
+.auth-form.active-form {
+  display: block !important;
+}
+
+.btn-primary-submit {
+  width: 100%;
+  padding: 14px;
+  background: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s;
+}
+
+.btn-primary-submit:hover {
+  background: #b80710;
+}
