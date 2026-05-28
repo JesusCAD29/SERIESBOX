@@ -26,33 +26,34 @@ const PanelHome = (() => {
 
   // Series adicionales para secciones (sin poster TMDB, usan placeholder elegante)
   const DRAMA_EXTRA = [
-    { nombre:"The Wire",        genero:"Drama",  temporadas:5, anio:2002, sinopsis:"La guerra contra el crimen en Baltimore vista desde todos los ángulos. La serie más compleja y realista jamás hecha." },
-    { nombre:"The Sopranos",    genero:"Drama",  temporadas:6, anio:1999, sinopsis:"Tony Soprano, jefe de la mafia de Nueva Jersey, intenta equilibrar su vida criminal con su familia. La serie que cambió la televisión para siempre." },
-    { nombre:"Mad Men",         genero:"Drama",  temporadas:7, anio:2007, sinopsis:"Don Draper y la agencia Sterling Cooper navegan los años 60 en Madison Avenue. Un retrato brillante de identidad, ambición y cambio social." },
-    { nombre:"The Crown",       genero:"Drama",  temporadas:6, anio:2016, sinopsis:"La historia de la familia real británica desde la coronación de Isabel II. Épica íntima de poder, deber y sacrificio." },
-    { nombre:"Mindhunter",      genero:"Drama",  temporadas:2, anio:2017, sinopsis:"Dos agentes del FBI forjan la ciencia del perfilado criminal entrevistando asesinos en serie. Tensa y psicológicamente fascinante." },
-    { nombre:"Ozark",           genero:"Drama",  temporadas:4, anio:2017, sinopsis:"Un asesor financiero se ve obligado a blanquear dinero para un cartel mexicano en los Ozarks. Breaking Bad meets el Medio Oeste." },
+    { nombre:"The Wire",        genero:"Drama",  temporadas:5, anio:2002, tmdbId:1438,  sinopsis:"La guerra contra el crimen en Baltimore vista desde todos los ángulos. La serie más compleja y realista jamás hecha." },
+    { nombre:"The Sopranos",    genero:"Drama",  temporadas:6, anio:1999, tmdbId:1398,  sinopsis:"Tony Soprano, jefe de la mafia de Nueva Jersey, intenta equilibrar su vida criminal con su familia. La serie que cambió la televisión para siempre." },
+    { nombre:"Mad Men",         genero:"Drama",  temporadas:7, anio:2007, tmdbId:1104,  sinopsis:"Don Draper y la agencia Sterling Cooper navegan los años 60 en Madison Avenue. Un retrato brillante de identidad, ambición y cambio social." },
+    { nombre:"The Crown",       genero:"Drama",  temporadas:6, anio:2016, tmdbId:65494, sinopsis:"La historia de la familia real británica desde la coronación de Isabel II. Épica íntima de poder, deber y sacrificio." },
+    { nombre:"Mindhunter",      genero:"Drama",  temporadas:2, anio:2017, tmdbId:67744, sinopsis:"Dos agentes del FBI forjan la ciencia del perfilado criminal entrevistando asesinos en serie. Tensa y psicológicamente fascinante." },
+    { nombre:"Ozark",           genero:"Drama",  temporadas:4, anio:2017, tmdbId:69740, sinopsis:"Un asesor financiero se ve obligado a blanquear dinero para un cartel mexicano en los Ozarks. Breaking Bad meets el Medio Oeste." },
   ];
 
   const SCIFI_EXTRA = [
-    { nombre:"The Expanse",      genero:"Sci-Fi", temporadas:6, anio:2015, sinopsis:"En un futuro donde la humanidad colonizó el sistema solar, una conspiración amenaza la frágil paz entre la Tierra, Marte y el Cinturón." },
-    { nombre:"Westworld",        genero:"Sci-Fi", temporadas:4, anio:2016, sinopsis:"Un parque temático de androides conscientes cuestiona la naturaleza de la conciencia y el libre albedrío. Filosofía y acción a partes iguales." },
-    { nombre:"The Mandalorian",  genero:"Sci-Fi", temporadas:3, anio:2019, sinopsis:"Un cazarrecompensas solitario en los márgenes de la galaxia debe proteger a un misterioso niño de poderosas fuerzas. Baby Yoda incluido." },
-    { nombre:"Andor",            genero:"Sci-Fi", temporadas:1, anio:2022, sinopsis:"El origen de Cassian Andor y los primeros pasos de la Rebelión. La serie de Star Wars más madura y política jamás producida." },
-    { nombre:"Cyberpunk: Edgerunners",genero:"Sci-Fi",temporadas:1,anio:2022,sinopsis:"Un chico de la calle de Night City se convierte en mercenario cyberpunk. Studio Trigger en su máxima expresión visual y emocional." },
-    { nombre:"Fringe",           genero:"Sci-Fi", temporadas:5, anio:2008, sinopsis:"Un equipo especial del FBI investiga casos que desafían las leyes de la ciencia. La exploración de universos paralelos más adictiva de la televisión." },
+    { nombre:"The Expanse",      genero:"Sci-Fi", temporadas:6, anio:2015, tmdbId:63639,  sinopsis:"En un futuro donde la humanidad colonizó el sistema solar, una conspiración amenaza la frágil paz entre la Tierra, Marte y el Cinturón." },
+    { nombre:"Westworld",        genero:"Sci-Fi", temporadas:4, anio:2016, tmdbId:63247,  sinopsis:"Un parque temático de androides conscientes cuestiona la naturaleza de la conciencia y el libre albedrío. Filosofía y acción a partes iguales." },
+    { nombre:"The Mandalorian",  genero:"Sci-Fi", temporadas:3, anio:2019, tmdbId:82856,  sinopsis:"Un cazarrecompensas solitario en los márgenes de la galaxia debe proteger a un misterioso niño de poderosas fuerzas. Baby Yoda incluido." },
+    { nombre:"Andor",            genero:"Sci-Fi", temporadas:1, anio:2022, tmdbId:83867,  sinopsis:"El origen de Cassian Andor y los primeros pasos de la Rebelión. La serie de Star Wars más madura y política jamás producida." },
+    { nombre:"Cyberpunk: Edgerunners",genero:"Sci-Fi",temporadas:1,anio:2022, tmdbId:105248, sinopsis:"Un chico de la calle de Night City se convierte en mercenario cyberpunk. Studio Trigger en su máxima expresión visual y emocional." },
+    { nombre:"Fringe",           genero:"Sci-Fi", temporadas:5, anio:2008, tmdbId:1220,   sinopsis:"Un equipo especial del FBI investiga casos que desafían las leyes de la ciencia. La exploración de universos paralelos más adictiva de la televisión." },
   ];
 
   const COMEDIA_EXTRA = [
-    { nombre:"The Office",    genero:"Comedia", temporadas:9, anio:2005, sinopsis:"La vida absurda de los empleados de Dunder Mifflin. El mockumentary más querido de todos los tiempos." },
-    { nombre:"Ted Lasso",     genero:"Comedia", temporadas:3, anio:2020, sinopsis:"Un entrenador de fútbol americano toma las riendas de un equipo inglés sin saber nada del deporte. Optimismo contagioso." },
-    { nombre:"Fleabag",       genero:"Comedia", temporadas:2, anio:2016, sinopsis:"Una mujer londinense habla directamente a la cámara sobre su caótica vida. Phoebe Waller-Bridge en estado puro de genialidad." },
-    { nombre:"Abbott Elementary",genero:"Comedia",temporadas:3,anio:2021,sinopsis:"Profesores de una escuela pública de Filadelfia sobreviven la burocracia con humor y corazón. El mejor mockumentary desde The Office." },
-    { nombre:"Arrested Development",genero:"Comedia",temporadas:5,anio:2003,sinopsis:"Los Bluth, una familia disfuncional de millonarios venidos a menos. La comedia con más capas y chistes escondidos de la historia." },
-    { nombre:"Brooklyn Nine-Nine",genero:"Comedia",temporadas:8,anio:2013,sinopsis:"El precinto 99 de Brooklyn y sus detectives excéntricos. Comedia policial sin tópicos que amas a todos sus personajes." },
+    { nombre:"The Office",    genero:"Comedia", temporadas:9, anio:2005, tmdbId:2316,  sinopsis:"La vida absurda de los empleados de Dunder Mifflin. El mockumentary más querido de todos los tiempos." },
+    { nombre:"Ted Lasso",     genero:"Comedia", temporadas:3, anio:2020, tmdbId:97546, sinopsis:"Un entrenador de fútbol americano toma las riendas de un equipo inglés sin saber nada del deporte. Optimismo contagioso." },
+    { nombre:"Fleabag",       genero:"Comedia", temporadas:2, anio:2016, tmdbId:67070, sinopsis:"Una mujer londinense habla directamente a la cámara sobre su caótica vida. Phoebe Waller-Bridge en estado puro de genialidad." },
+    { nombre:"Abbott Elementary",genero:"Comedia",temporadas:3,anio:2021, tmdbId:114461, sinopsis:"Profesores de una escuela pública de Filadelfia sobreviven la burocracia con humor y corazón. El mejor mockumentary desde The Office." },
+    { nombre:"Arrested Development",genero:"Comedia",temporadas:5,anio:2003, tmdbId:4589, sinopsis:"Los Bluth, una familia disfuncional de millonarios venidos a menos. La comedia con más capas y chistes escondidos de la historia." },
+    { nombre:"Brooklyn Nine-Nine",genero:"Comedia",temporadas:8,anio:2013, tmdbId:48891, sinopsis:"El precinto 99 de Brooklyn y sus detectives excéntricos. Comedia policial sin tópicos que amas a todos sus personajes." },
   ];
 
   const TMDB_POSTERS = {
+    // Catálogo principal (Tendencias)
     1396:'/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
     66732:'/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
     100088:'/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg',
@@ -69,15 +70,99 @@ const PanelHome = (() => {
     81189:'/t/p/w500/7O4iVfOMQmdCSxhOg1WnzG1AgYy.jpg',
     136315:'/t/p/w500/sHm7AiM8GqvIBB8qmRN0nCseBMJ.jpg',
     95557:'/t/p/w500/yDWJYRAwMNKbIYT8ZB33qy84uzO.jpg',
+    // Drama Extra
+    1438:'/t/p/w500/4lbclFySvugI51fwsyxBTOm4DqK.jpg',
+    1398:'/t/p/w500/6DXuKVDsGQWtwcSm0u0buIHSSdZ.jpg',
+    1104:'/t/p/w500/7v8iCNzKFpdlsFwLO6toyG6C3J8.jpg',
+    65494:'/t/p/w500/1M876KPjulVwppEpldhdc8V4o68.jpg',
+    67744:'/t/p/w500/gKh7bxoM94apOL5F7PsVCpqTFYU.jpg',
+    69740:'/t/p/w500/m73bD8VNhgBZMDqJnqGaCJvItPD.jpg',
+    // Sci-Fi Extra
+    63639:'/t/p/w500/parCxwendOUHNbIxAyLmFSLj4iC.jpg',
+    63247:'/t/p/w500/8MfgyFHf7XEboZJPZXCIDqqiz6e.jpg',
+    82856:'/t/p/w500/eU1i6eHXlzMOlEq0ku1Bry4MOy9.jpg',
+    83867:'/t/p/w500/59SVNwLfoMnZPPB6ukW6dlPxAdI.jpg',
+    105248:'/t/p/w500/7jBHPSwJkODPz7XrcMtRZ0KLDGZ.jpg',
+    1220:'/t/p/w500/sY9hg5dLJ93RJOyKEiu1nwucFsb.jpg',
+    // Comedia Extra
+    2316:'/t/p/w500/qWnJzyZhyy74gjpSjIXWmuk0ifX.jpg',
+    97546:'/t/p/w500/5fhZdwP1dvJ0FyVH6vrFdHwpXIn.jpg',
+    67070:'/t/p/w500/27vEYsRKa3eKAvgMEwHxBvPTCR5.jpg',
+    114461:'/t/p/w500/jBCn1Dy1Nl05gv8MaGxPeDNJjmP.jpg',
+    4589:'/t/p/w500/hLTBC2MtbMsq9Y6GLc0bnr2PCWJ.jpg',
+    48891:'/t/p/w500/hgRMSOt7a1NX0R9YoFGaO0XMScp.jpg',
   };
 
+  // Cache dinámico de posters obtenidos de la API
+  const _dynamicPosters = {};
+
   function _getImg(serie) {
+    // 1. Poster dinámico (obtenido de la API en runtime)
+    if (serie.tmdbId && _dynamicPosters[serie.tmdbId]) {
+      return `https://image.tmdb.org/t/p/w500${_dynamicPosters[serie.tmdbId]}`;
+    }
+    // 2. Poster hardcodeado como fallback
     if (serie.tmdbId && TMDB_POSTERS[serie.tmdbId])
       return `https://image.tmdb.org${TMDB_POSTERS[serie.tmdbId]}`;
-    // Placeholder estilizado con gradiente
+    // 3. Placeholder estilizado con gradiente
     const colors = ['2d1b69','1a1a2e','0f3460','16213e','1b2838','0d1b2a'];
     const color = colors[Math.abs(serie.nombre.length * 7) % colors.length];
     return `https://placehold.co/300x450/${color}/cccccc?text=${encodeURIComponent(serie.nombre.substring(0,12))}`;
+  }
+
+  // Recolectar todos los tmdbIds de todas las listas
+  function _getAllTmdbIds() {
+    const allSeries = [...CATALOGO, ...DRAMA_EXTRA, ...SCIFI_EXTRA, ...COMEDIA_EXTRA];
+    return allSeries.filter(s => s.tmdbId).map(s => s.tmdbId);
+  }
+
+  // Obtener posters dinámicamente del backend y actualizar las imágenes
+  async function _fetchAndUpdatePosters() {
+    try {
+      const ids = _getAllTmdbIds();
+      const res = await fetch('/api/tmdb-posters', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids })
+      });
+      
+      if (!res.ok) return; // Silencioso si falla (los hardcodeados ya están en uso)
+      
+      const data = await res.json();
+      
+      // Guardar en cache dinámico
+      for (const [id, info] of Object.entries(data)) {
+        if (info.poster_path) {
+          _dynamicPosters[id] = info.poster_path;
+        }
+      }
+      
+      // Actualizar todas las imágenes que tengan poster dinámico
+      const allSeries = [...CATALOGO, ...DRAMA_EXTRA, ...SCIFI_EXTRA, ...COMEDIA_EXTRA];
+      document.querySelectorAll('.nf-slide').forEach(slide => {
+        const idx = +slide.dataset.idx;
+        const catalog = slide.dataset.catalog;
+        let serie;
+        if (catalog === 'drama')   serie = DRAMA_EXTRA[idx];
+        else if (catalog === 'scifi')   serie = SCIFI_EXTRA[idx];
+        else if (catalog === 'comedia') serie = COMEDIA_EXTRA[idx];
+        else serie = CATALOGO[idx];
+        
+        if (serie && serie.tmdbId && _dynamicPosters[serie.tmdbId]) {
+          const img = slide.querySelector('.nf-slide-img-wrap img');
+          if (img) {
+            const newSrc = `https://image.tmdb.org/t/p/w500${_dynamicPosters[serie.tmdbId]}`;
+            if (img.src !== newSrc) img.src = newSrc;
+          }
+        }
+      });
+      
+      // Actualizar hero banner también
+      _buildHero();
+      
+    } catch {
+      // Silencioso — los posters hardcodeados se mantienen
+    }
   }
 
   function _esc(str) {
@@ -370,6 +455,9 @@ const PanelHome = (() => {
     const loading = document.getElementById('home-loading');
     if(loading) loading.style.display='none';
     _renderHome();
+    
+    // Buscar posters dinámicos en segundo plano (no bloquea la carga)
+    _fetchAndUpdatePosters();
   }
 
   return { init };

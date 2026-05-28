@@ -162,7 +162,7 @@ body {
    ══════════════════════════════════════════════════════════════════════════ */
 #page-home {
   padding: 2rem 1.5rem;
-  max-width: 700px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -2034,4 +2034,329 @@ body {
   background: var(--acento-rojo);
   color: #fff;
   transform: scale(1.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile-first complete overhaul
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Reseñas en modal Discover ──────────────────────────────────────────── */
+.nf-resena-card {
+  background: #151515;
+  border: 1px solid #252525;
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.6rem;
+}
+.nf-resena-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+.nf-resena-autor {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #e50914;
+}
+.nf-resena-stars { font-size: 0.82rem; }
+.nf-resena-texto {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-style: italic;
+  line-height: 1.4;
+}
+.nf-resenas-empty, .nf-resenas-loading {
+  font-size: 0.82rem;
+  color: #555;
+  font-style: italic;
+}
+
+/* ── Tablet (≤ 768px) ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar {
+    padding: 0 1rem;
+    height: 54px;
+  }
+  .navbar-brand .logo-text { font-size: 1.2rem; }
+  .navbar-brand .logo-icon { font-size: 1.4rem; }
+
+  /* Tabs */
+  .tab-nav {
+    padding: 0 0.5rem;
+    gap: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Hero */
+  .nf-hero-banner { height: 320px; margin-bottom: 1.5rem; }
+  .nf-hero-content { padding: 1.5rem 1.5rem; max-width: 400px; }
+  .nf-hero-titulo { font-size: clamp(1.4rem, 4vw, 2rem); }
+  .nf-hero-sinopsis { font-size: 0.82rem; -webkit-line-clamp: 2; line-clamp: 2; }
+
+  /* Discover */
+  #page-home { max-width: 100%; }
+  #page-home .nf-carousel-section,
+  #page-home .nf-queue-section { padding: 0 0.75rem; }
+
+  /* Slides */
+  .nf-slide { width: 155px; }
+  .nf-slide-img-wrap { height: 210px; }
+
+  /* My Series */
+  #page-myseries { max-width: 100%; padding: 1.5rem 1rem; }
+
+  /* Ruleta */
+  #page-ruleta { max-width: 100%; padding: 2rem 1rem; }
+  .slot-wrapper, .slot-viewport { width: 100%; max-width: 340px; }
+
+  /* Modal */
+  .nf-modal-card { max-width: 95vw; }
+  .nf-modal-hero { height: 200px; }
+
+  /* Auth */
+  .auth-card { padding: 30px 25px; max-width: 90vw; }
+}
+
+/* ── Teléfonos (≤ 480px) ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Root ajustes */
+  html { font-size: 15px; }
+
+  /* Navbar compacto */
+  .navbar {
+    padding: 0 0.75rem;
+    height: 50px;
+  }
+  .navbar-brand .logo-text { font-size: 1.1rem; }
+  .navbar-brand .logo-icon { font-size: 1.3rem; }
+  .avatar-badge { width: 32px; height: 32px; font-size: 0.9rem; }
+  .username-display { font-size: 0.78rem; }
+  #session-timer { font-size: 0.62rem !important; }
+
+  /* Tabs compactos */
+  .tab-nav {
+    padding: 0;
+    justify-content: stretch;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.78rem;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+
+  /* Hero banner para móvil */
+  .nf-hero-banner {
+    height: 260px;
+    margin-bottom: 1.2rem;
+    border-radius: 0;
+  }
+  .nf-hero-content {
+    padding: 1rem 1rem 1.2rem;
+    max-width: 100%;
+  }
+  .nf-hero-eyebrow { font-size: 0.68rem; margin-bottom: 0.25rem; }
+  .nf-hero-titulo { font-size: 1.35rem; margin-bottom: 0.3rem; }
+  .nf-hero-genero { font-size: 0.75rem; margin-bottom: 0.5rem; }
+  .nf-hero-sinopsis {
+    font-size: 0.78rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    margin-bottom: 0.8rem;
+  }
+  .nf-hero-btns { gap: 0.5rem; }
+  .nf-hero-btn-play { padding: 0.5rem 1rem; font-size: 0.82rem; }
+  .nf-hero-btn-info { padding: 0.5rem 0.9rem; font-size: 0.82rem; }
+  .hero-dots { bottom: 0.6rem; right: 0.75rem; }
+  .hero-dot { width: 6px; height: 6px; }
+
+  /* Carruseles para móvil */
+  #page-home .nf-carousel-section,
+  #page-home .nf-queue-section {
+    padding: 0 0.6rem;
+  }
+  .nf-carousel-section { margin-bottom: 1.8rem !important; padding: 0.8rem 0.6rem 0 !important; }
+  .nf-carousel-header-row { margin-bottom: 0.6rem; }
+  .nf-section-label { font-size: 0.92rem; }
+  .nf-arrow { width: 28px; height: 28px; font-size: 1.1rem; }
+  .nf-carousel-track { gap: 10px; }
+
+  .nf-slide { width: 130px; }
+  .nf-slide-img-wrap { height: 175px; }
+  .nf-slide-info { padding: 0.5rem 0.6rem 0.6rem; }
+  .nf-slide-title { font-size: 0.75rem; }
+  .nf-slide-meta { font-size: 0.68rem; margin-bottom: 0.4rem; }
+  .nf-btn-ver { padding: 0.3rem 0.4rem; font-size: 0.7rem; }
+  .nf-genre-chip { font-size: 0.62rem; padding: 2px 5px; }
+
+  /* Modal detail para móvil */
+  .nf-modal-overlay { padding: 0; align-items: flex-end; }
+  .nf-modal-card {
+    max-width: 100vw;
+    max-height: 95vh;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+  }
+  .nf-modal-hero { height: 180px; }
+  .nf-modal-hero-title { bottom: 10px; left: 14px; right: 14px; }
+  .nf-modal-hero-title h2 { font-size: 1.2rem; margin-bottom: 6px; }
+  .nf-meta-chip { font-size: 0.68rem; padding: 2px 8px; }
+  .nf-modal-body { padding: 0.9rem 1rem 1.2rem; }
+  .nf-modal-sinopsis { font-size: 0.83rem; line-height: 1.55; margin-bottom: 1rem; }
+  .nf-modal-section-label { font-size: 0.7rem; }
+  .modal-star-btn { font-size: 1.4rem; }
+  .nf-modal-btn-primary { padding: 0.65rem 0.8rem; font-size: 0.85rem; }
+  .nf-modal-close { top: 8px; right: 8px; width: 32px; height: 32px; font-size: 0.85rem; }
+
+  /* Perfil */
+  .perfil-avatar { width: 64px; height: 64px; font-size: 1.8rem; }
+  .perfil-username { font-size: 1.15rem; }
+  .perfil-rango { font-size: 0.8rem; }
+
+  /* Stats */
+  .stats-grid { gap: 0.4rem; }
+  .stat-card { padding: 0.7rem 0.5rem; }
+  .stat-value { font-size: 1.1rem; }
+  .stat-label { font-size: 0.65rem; }
+
+  /* Historial cards */
+  .card-historial { padding: 0.8rem 0.9rem; }
+  .card-historial-title { font-size: 0.95rem; }
+  .card-historial-meta { font-size: 0.75rem; gap: 0.6rem; flex-wrap: wrap; }
+  .card-historial-review { font-size: 0.82rem; padding: 0.5rem 0.7rem; }
+  .card-historial-actions { flex-wrap: wrap; }
+  .btn-card-edit, .btn-card-delete { font-size: 0.72rem; padding: 0.3rem 0.7rem; }
+
+  /* Formulario agregar serie */
+  .form-section { padding-top: 1.25rem; }
+  .form-section-title { font-size: 0.95rem; margin-bottom: 1rem; }
+  .form-label { font-size: 0.72rem; }
+  .form-input, .form-select { font-size: 0.88rem; padding: 0.55rem 0.75rem; }
+  .form-row { gap: 0.5rem; }
+  .stars-container { gap: 0.35rem; }
+  .star-btn { font-size: 1.6rem; }
+  .btn-primary { padding: 0.7rem 1.2rem; font-size: 0.92rem; }
+
+  /* Por Ver */
+  .porver-section { padding: 0 0.5rem; }
+  .porver-card { padding: 0.65rem 0.8rem; }
+  .porver-card-title { font-size: 0.88rem; }
+  .porver-card-meta { font-size: 0.72rem; }
+
+  /* Ruleta */
+  #page-ruleta { padding: 1.5rem 0.75rem; gap: 1.2rem; }
+  .ruleta-header h1 { font-size: 1.6rem; }
+  .ruleta-header p { font-size: 0.85rem; }
+  .slot-wrapper, .slot-viewport { width: 100%; max-width: 300px; }
+  .slot-viewport { height: 140px; }
+  .slot-item { height: 48px; font-size: 0.95rem; padding: 0 0.75rem; }
+  .slot-viewport .selector-line { height: 48px; }
+  .btn-girar { padding: 0.8rem 2rem; font-size: 1rem; }
+
+  /* Resultado ruleta */
+  .result-overlay { max-width: 100%; margin: 1rem auto 0; border-radius: 12px; }
+  .ruleta-result-inner { padding: 1rem; gap: 0.9rem; }
+  .ruleta-result-poster { width: 90px; }
+  .ruleta-result-poster img { width: 90px; height: 135px; }
+  .ruleta-result-titulo { font-size: 1.15rem; }
+  .ruleta-result-meta { font-size: 0.78rem; }
+  .ruleta-result-sinopsis { font-size: 0.82rem; margin-bottom: 0.8rem; }
+  .ruleta-action-btns { flex-direction: column; gap: 8px; }
+  .ruleta-btn-visto, .ruleta-btn-watchlist { min-width: auto; padding: 0.6rem 1rem; font-size: 0.82rem; }
+
+  /* Review form ruleta */
+  .ruleta-review-form { padding: 0.8rem; }
+  .ruleta-review-textarea { min-height: 70px; font-size: 0.82rem; }
+
+  /* Auth modal para móvil */
+  .auth-card {
+    padding: 25px 20px;
+    max-width: 95vw;
+    margin: 0 0.5rem;
+  }
+  .auth-logo { font-size: 1.6rem; margin-bottom: 20px; }
+  .auth-tab { font-size: 0.88rem; padding: 9px 0; }
+  .btn-primary-submit { padding: 12px; font-size: 1rem; }
+
+  /* Toast para móvil */
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    transform: translateX(0) translateY(100px);
+    text-align: center;
+    font-size: 0.82rem;
+    padding: 0.6rem 1rem;
+  }
+  .toast.show { transform: translateX(0) translateY(0); }
+
+  /* Logout button */
+  #btn-logout-float {
+    bottom: 12px !important;
+    right: 12px !important;
+    font-size: 0.75rem !important;
+    padding: 0.55rem 1.1rem !important;
+  }
+
+  /* Reseñas */
+  .nf-resena-card, .ruleta-resena-card { padding: 0.6rem 0.7rem; }
+  .nf-resena-texto, .ruleta-resena-texto { font-size: 0.8rem; }
+}
+
+/* ── Teléfonos muy pequeños (≤ 360px) ──────────────────────────────────── */
+@media (max-width: 360px) {
+  .navbar { height: 46px; }
+  .navbar-brand .logo-text { font-size: 1rem; }
+  .tab-btn { padding: 0.6rem 0.5rem; font-size: 0.72rem; }
+
+  .nf-hero-banner { height: 220px; }
+  .nf-hero-titulo { font-size: 1.15rem; }
+  .nf-hero-sinopsis { display: none; }
+
+  .nf-slide { width: 115px; }
+  .nf-slide-img-wrap { height: 155px; }
+  .nf-slide-title { font-size: 0.7rem; }
+  .nf-carousel-track { gap: 8px; }
+
+  .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.3rem; }
+  .stat-value { font-size: 1rem; }
+  .stat-card { padding: 0.55rem 0.35rem; }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  .slot-wrapper, .slot-viewport { max-width: 260px; }
+  .btn-girar { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
+
+  .auth-card { padding: 20px 16px; }
+}
+
+/* ── Orientación horizontal en móvil ───────────────────────────────────── */
+@media (max-height: 480px) and (orientation: landscape) {
+  .nf-hero-banner { height: 180px; }
+  .nf-hero-content { padding: 0.75rem 1rem; }
+  .nf-hero-sinopsis { display: none; }
+  .nf-modal-overlay { align-items: center; }
+  .nf-modal-card { max-height: 90vh; border-radius: 14px; }
+  .nf-modal-hero { height: 140px; }
+  .auth-card { max-height: 90vh; overflow-y: auto; }
+}
+
+/* ── Mejora de touch targets ───────────────────────────────────────────── */
+@media (pointer: coarse) {
+  .nf-btn-ver { min-height: 36px; }
+  .nf-arrow { min-width: 36px; min-height: 36px; }
+  .tab-btn { min-height: 44px; }
+  .hero-dot { width: 10px; height: 10px; }
+  .nf-modal-close { width: 40px; height: 40px; }
+  .btn-card-edit, .btn-card-delete { min-height: 36px; }
+  .porver-btn-remove { width: 36px; height: 36px; }
 }

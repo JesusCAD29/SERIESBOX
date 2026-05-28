@@ -148,4 +148,91 @@ router.put('/usuario', (req, res) => {
   res.json({ ok: true, nombre: nombre.trim() });
 });
 
+// ── TMDB Poster proxy (público, con caché) ──────────────────────────────────
+const posterCache = {};
+router.get('/tmdb-poster/:tmdbId', async (req, res) => {
+  const { tmdbId } = req.params;
+  
+  // Devolver de caché si existe
+  if (posterCache[tmdbId]) {
+    return res.json(posterCache[tmdbId]);
+  }
+  
+  try {
+    // TMDB API v3 — usar API key gratuita
+    const tmdbKey = process.env.TMDB_API_KEY;
+    if (!tmdbKey) {
+      return res.status(500).json({ error: 'TMDB_API_KEY no configurada' });
+    }
+    
+    const response = await fetch(
+      `https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${tmdbKey}&language=es-MX`
+    );
+    
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Error de TMDB' });
+    }
+    
+    const data = await response.json();
+    const result = {
+      poster_path: data.poster_path || null,
+      backdrop_path: data.backdrop_path || null,
+    };
+    
+    // Guardar en caché
+    posterCache[tmdbId] = result;
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al consultar TMDB' });
+  }
+});
+
+// ── Batch: obtener posters de múltiples series (público, con caché) ──────────
+router.post('/tmdb-posters', async (req, res) => {
+  const { ids } = req.body; // Array de tmdbIds
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ error: 'Se requiere un array de IDs' });
+  }
+  
+  const tmdbKey = process.env.TMDB_API_KEY;
+  if (!tmdbKey) {
+    return res.status(500).json({ error: 'TMDB_API_KEY no configurada' });
+  }
+  
+  const results = {};
+  const toFetch = [];
+  
+  // Primero revisar caché
+  for (const id of ids) {
+    if (posterCache[id]) {
+      results[id] = posterCache[id];
+    } else {
+      toFetch.push(id);
+    }
+  }
+  
+  // Fetch los que faltan (máximo 40 a la vez)
+  const fetchBatch = toFetch.slice(0, 40);
+  await Promise.all(fetchBatch.map(async (id) => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${tmdbKey}&language=es-MX`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        const result = {
+          poster_path: data.poster_path || null,
+          backdrop_path: data.backdrop_path || null,
+        };
+        posterCache[id] = result;
+        results[id] = result;
+      }
+    } catch {
+      // Silenciar errores individuales
+    }
+  }));
+  
+  res.json(results);
+});
+
 module.exports = router;
