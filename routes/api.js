@@ -211,9 +211,8 @@ router.post('/tmdb-posters', async (req, res) => {
     }
   }
   
-  // Fetch los que faltan (máximo 40 a la vez)
-  const fetchBatch = toFetch.slice(0, 40);
-  await Promise.all(fetchBatch.map(async (id) => {
+  // Fetch los que faltan
+  await Promise.all(toFetch.map(async (id) => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/tv/${id}?api_key=${tmdbKey}&language=es-MX`

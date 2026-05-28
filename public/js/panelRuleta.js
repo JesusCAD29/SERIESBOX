@@ -58,12 +58,11 @@ const PanelRuleta = (() => {
   ];
 
   function _getImg(serie) {
-    const rich = CATALOGO_RICH.find(r => r.nombre.toLowerCase() === serie.nombre.toLowerCase());
-    if (rich && _dynamicPosters[rich.tmdbId]) {
-      return `https://image.tmdb.org/t/p/w500${_dynamicPosters[rich.tmdbId]}`;
+    if (serie.tmdbId && _dynamicPosters[serie.tmdbId]) {
+      return `https://image.tmdb.org/t/p/w500${_dynamicPosters[serie.tmdbId]}`;
     }
-    if (rich && TMDB_POSTERS[rich.tmdbId])
-      return `https://image.tmdb.org${TMDB_POSTERS[rich.tmdbId]}`;
+    if (serie.tmdbId && TMDB_POSTERS[serie.tmdbId])
+      return `https://image.tmdb.org${TMDB_POSTERS[serie.tmdbId]}`;
     return `https://placehold.co/300x450/1e1e1e/787878?text=${encodeURIComponent(serie.nombre)}`;
   }
 
@@ -364,7 +363,7 @@ const PanelRuleta = (() => {
   }
 
   async function _fetchDynamicPosters() {
-    const ids = CATALOGO_RICH.map(r => r.tmdbId).filter(Boolean);
+    const ids = _catalogo.map(s => s.tmdbId).filter(Boolean);
     try {
       const res = await fetch('/api/tmdb-posters', {
         method: 'POST',
