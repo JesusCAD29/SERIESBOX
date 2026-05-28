@@ -15,6 +15,8 @@ const PanelRuleta = (() => {
   let _animando = false;
   let _rafId    = null;
 
+  const _dynamicPosters = {};
+
   // TMDB posters (espejo del panelHome)
   const TMDB_POSTERS = {
     1396:'/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
@@ -57,6 +59,9 @@ const PanelRuleta = (() => {
 
   function _getImg(serie) {
     const rich = CATALOGO_RICH.find(r => r.nombre.toLowerCase() === serie.nombre.toLowerCase());
+    if (rich && _dynamicPosters[rich.tmdbId]) {
+      return `https://image.tmdb.org/t/p/w500${_dynamicPosters[rich.tmdbId]}`;
+    }
     if (rich && TMDB_POSTERS[rich.tmdbId])
       return `https://image.tmdb.org${TMDB_POSTERS[rich.tmdbId]}`;
     return `https://placehold.co/300x450/1e1e1e/787878?text=${encodeURIComponent(serie.nombre)}`;
@@ -121,7 +126,11 @@ const PanelRuleta = (() => {
     _reel().style.transform = 'translateY(0)';
     await new Promise(r => requestAnimationFrame(r));
 
-    const posicionFinal = (INDICE_GANADOR * ALTO_FILA) - (160 / 2 - ALTO_FILA / 2);
+    const altoFila = _items[0] ? _items[0].offsetHeight : ALTO_FILA;
+    const viewportHeight = document.querySelector('.slot-viewport').offsetHeight || 160;
+    const posicionFinal = (INDICE_GANADOR * altoFila) - (viewportHeight / 2 - altoFila / 2);
+    _reel().style.height = `${NOMBRES_TOTALES * altoFila}px`;
+
     _animarRuleta(0, posicionFinal, () => {
       _mostrarResultado(ganadora);
       _animando = false;
@@ -354,9 +363,26 @@ const PanelRuleta = (() => {
     return arr;
   }
 
+  async function _fetchDynamicPosters() {
+    const ids = CATALOGO_RICH.map(r => r.tmdbId).filter(Boolean);
+    try {
+      const res = await fetch('/api/tmdb-posters', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids })
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      for (const [id, info] of Object.entries(data)) {
+        if (info.poster_path) _dynamicPosters[id] = info.poster_path;
+      }
+    } catch {}
+  }
+
   async function init() {
     _catalogo = await API.getCatalogo().catch(() => []);
     _construirCarrete();
+    _fetchDynamicPosters();
     _btnGirar().addEventListener('click', _accionGirar);
   }
 
